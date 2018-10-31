@@ -3,4 +3,5 @@ RemoteSystemsTempFiles
 .gitignore.bak
 .classpath
 .settings
+.class
 .recommenders
