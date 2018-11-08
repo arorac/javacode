@@ -1,7 +1,11 @@
 package com.crossover.techtrial.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.Transient;
 
 
 /**
@@ -30,7 +36,7 @@ public class HourlyElectricity implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   Long id;
   
-  @JsonIgnore
+ // @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "panel_id", referencedColumnName = "id")
   Panel panel;
@@ -40,6 +46,17 @@ public class HourlyElectricity implements Serializable {
   
   @Column(name = "reading_at")
   LocalDateTime readingAt;
+  
+  @Transient
+  LocalDate localDate;
+
+	public void setLocalDate(LocalDate localDate) {
+		this.localDate = localDate;
+	}
+	
+	public LocalDate getLocalDate() {
+		return localDate;
+	}
 
   public Long getId() {
     return id;
@@ -126,6 +143,21 @@ public class HourlyElectricity implements Serializable {
         + generatedElectricity + ", readingAt=" + readingAt + "]";
   }
   
-  
+  public static void main(String[] args) throws JsonProcessingException {
+	
+	  Panel ps = new Panel();
+	  ps.setSerial("123456");
+	  ps.setBrand("tesla");
+	  
+	  
+	  HourlyElectricity he = new HourlyElectricity();
+	  he.setPanel(ps);
+	  he.setGeneratedElectricity(200l);
+	  
+	  ObjectMapper mapper = new ObjectMapper();
+	  System.out.println(mapper.writeValueAsString(he));
+	  System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(he));
+	  
+}
   
 }

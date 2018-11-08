@@ -44,7 +44,12 @@ public class PanelController {
 	  
 	  //Bug 1: Serial should be of length 16 only. 
 	  if((panel != null) && (panel.getSerial() != null) && ( panel.getSerial().trim().length()==16)){ 
-		  panelService.register(panel);
+		  try{
+			 Panel p = panelService.findBySerial(panel.getSerial()) ;
+			 
+		  }catch(Exception e){
+			  panelService.register(panel);
+		  }
 		  return  ResponseEntity.accepted().build();
 	  }else{
 		  //GlobalExceptionHandler has been modified to intercept the Exception being raised and send the error

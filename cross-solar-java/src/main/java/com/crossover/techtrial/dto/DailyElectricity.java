@@ -2,6 +2,7 @@ package com.crossover.techtrial.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * DailyElectricity class will hold sum, average,minimum and maximum electricity for a given day.
@@ -15,6 +16,8 @@ public class DailyElectricity implements Serializable {
 
   private LocalDate date;
   
+  private LocalDateTime time;
+  
   private Long sum;
   
   private Double average;
@@ -22,6 +25,10 @@ public class DailyElectricity implements Serializable {
   private Long min;
   
   private Long max;
+  
+  public DailyElectricity (LocalDate date,Long sum,Double avg,Long min, Long max){
+	  
+  }
 
   public LocalDate getDate() {
     return date;
